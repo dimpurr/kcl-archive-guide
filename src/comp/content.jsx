@@ -8,37 +8,13 @@ import {
     ChevronRight,
     ExternalLink,
     Play,
-    Pause
+    Pause,
+    X,
+    Download,
+    Info
 } from 'lucide-react';
+import DocumentPreview from './metadatapopup';
 
-// Sidebar floating content component
-const FloatingContent = ({ children, align = 'right' }) => (
-    <div className={`md:float-${align} my-6 md:m-4 bg-white rounded-lg shadow-lg overflow-hidden`}>
-        {children}
-    </div>
-);
-
-// Timeline tooltip component
-const TimelineTooltip = ({ year, title, content }) => {
-    const [isOpen, setIsOpen] = useState(false);
-
-    return (
-        <div
-            className="inline-block relative cursor-help border-b-2 border-dotted border-red-300"
-            onMouseEnter={() => setIsOpen(true)}
-            onMouseLeave={() => setIsOpen(false)}
-        >
-            <span className="text-red-600 font-medium">{year}</span>
-            {isOpen && (
-                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-4 bg-white shadow-lg rounded-lg z-10">
-                    <h4 className="font-medium mb-1">{title}</h4>
-                    <p className="text-sm text-gray-600">{content}</p>
-                    <div className="absolute bottom-[-8px] left-1/2 -translate-x-1/2 w-4 h-4 bg-white transform rotate-45 shadow-lg"></div>
-                </div>
-            )}
-        </div>
-    );
-};
 
 // Image gallery component
 const ImageGallery = ({ images }) => {
@@ -98,37 +74,7 @@ const ImageGallery = ({ images }) => {
     );
 };
 
-// Document preview component
-const DocumentPreview = ({ document }) => {
-    const [isExpanded, setIsExpanded] = useState(false);
-
-    return (
-        <div className="bg-gray-50 rounded-lg p-4">
-            <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
-                    <FileText className="h-6 w-6 text-red-600" />
-                </div>
-                <div className="flex-grow">
-                    <h4 className="font-medium">{document.title}</h4>
-                    <p className="text-sm text-gray-500 mb-2">{document.date}</p>
-                    <p className={`text-gray-600 ${!isExpanded && 'line-clamp-3'}`}>
-                        {document.content}
-                    </p>
-                    {document.content.length > 150 && (
-                        <button
-                            onClick={() => setIsExpanded(!isExpanded)}
-                            className="text-red-600 text-sm mt-2 hover:underline"
-                        >
-                            {isExpanded ? 'Read less' : 'Read more'}
-                        </button>
-                    )}
-                </div>
-            </div>
-        </div>
-    );
-};
-
-// Main article component
+// Main component
 export default function PreludeToWar() {
     // Sample gallery images
     const galleryImages = [
@@ -138,27 +84,60 @@ export default function PreludeToWar() {
         },
         {
             url: 'https://cdn.britannica.com/49/135149-050-D6B8878A/troops-British-trench-Western-Front-World-War.jpg',
-             caption: 'Military exercises and manoeuvres documentation from 1906-1909'
+            caption: 'Military exercises and manoeuvres documentation from 1906-1909'
         },
         {
             url: 'https://cdn.britannica.com/49/135149-050-D6B8878A/troops-British-trench-Western-Front-World-War.jpg',
-             caption: 'Balkan correspondent scrapbooks covering the period 1903-1913'
+            caption: 'Balkan correspondent scrapbooks covering the period 1903-1913'
         }
     ];
 
-    // Sample key documents
+    // Key documents with enhanced metadata
     const keyDocuments = [
         {
-            title: "Field Service Regulations 1909",
-            date: "1909",
-            content: "Operations, organisation and administration documents from military training manuals collected by Captain Sir Basil Liddell Hart. These materials provide crucial insight into military preparation and thinking before the outbreak of war."
+            title: "Field Service Regulations, Vol. 3, Operations Higher Formations",
+            date: "1935",
+            referenceCode: "LIDDELL HART 15/8/92",
+            creator: "Hart, Sir Basil Henry Liddell, 1895-1970, Knight, Captain, military historian",
+            content: "Field service regulations issued by the War Office (HMSO, London, 1935) providing detailed guidance on operations of higher formations. These materials offer crucial insight into military doctrine and organizational thinking in the interwar period.",
+            catalogueUrl: "https://archives.kingscollections.org/liddell-hart-15-8-92"
         },
         {
-            title: "Russo-Japanese War Observations",
-            date: "1904-1905",
-            content: "General Sir Ian Hamilton's detailed diaries, notes, photographs, maps and letters home from his service as military attaché to the First Japanese Army in Manchuria. These observations would later form the basis of his influential work 'A Staff Officer's scrap-book during the Russo-Japanese war'."
+            title: "Notes on the Russo-Japanese War",
+            date: "1907",
+            referenceCode: "CAPPER, T 2/4/11",
+            creator: "Capper, Sir Thompson, 1863-1915, Knight, Major General",
+            content: "Rough notes entitled 'Lessons from Manchurian War' (Russo-Japanese War, 1904-1905) compiled by Thompson Capper, mainly taken from printed sources. These observations provided important insights that influenced British military thinking leading up to World War One.",
+            catalogueUrl: "https://archives.kingscollections.org/capper-t-2-4-11"
         }
     ];
+
+    // Timeline Tooltip Component
+    const TimelineTooltip = ({ year, title, content }) => {
+        const [isOpen, setIsOpen] = useState(false);
+        return (
+            <div className="inline-block relative cursor-help border-b-2 border-dotted border-red-300"
+                onMouseEnter={() => setIsOpen(true)}
+                onMouseLeave={() => setIsOpen(false)}>
+                <span className="text-red-600 font-medium">{year}</span>
+                {isOpen && (
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-4 bg-white shadow-lg rounded-lg z-10">
+                        <h4 className="font-medium mb-1">{title}</h4>
+                        <p className="text-sm text-gray-600">{content}</p>
+                        <div className="absolute bottom-[-8px] left-1/2 -translate-x-1/2 w-4 h-4 bg-white transform rotate-45 shadow-lg"></div>
+                    </div>
+                )}
+            </div>
+        );
+    };
+
+    // Floating Content Component
+    const FloatingContent = ({ children, align = 'right' }) => (
+        <div className={`md:float-${align} my-6 md:m-4 bg-white rounded-lg shadow-lg `}>
+            {children}
+        </div>
+    );
+
 
     return (
         <article className="max-w-4xl mx-auto prose prose-lg prose-red">
@@ -209,6 +188,7 @@ export default function PreludeToWar() {
                     content="The earliest military training manuals in the collection, marking the beginning of modern military doctrine development."
                 /> &nbsp;onwards.
             </p>
+
 
             <FloatingContent align="left">
                 <div className="p-4">
