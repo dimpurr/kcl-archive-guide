@@ -6,7 +6,8 @@ import {
     CalendarDays,
     Users,
     Search,
-    Globe
+    Globe,
+    ChevronDown
 } from 'lucide-react';
 
 const archiveStructure = {
@@ -128,6 +129,15 @@ const documentTypes = [
     { name: 'Memoirs', value: 15, color: '#14b8a6' }
 ];
 
+const languages = [
+    { code: 'en', name: 'English', percentage: 95 },
+    { code: 'fr', name: 'French', percentage: 92 },
+    { code: 'de', name: 'German', percentage: 80 },
+    { code: 'ru', name: 'Russian', percentage: 75 },
+    { code: 'it', name: 'Italian', percentage: 43 },
+    { code: 'tr', name: 'Turkish', percentage: 22 }
+];
+
 const SectionNavigation = () => {
     return (
         <div className="bg-white rounded-lg shadow-lg p-4">
@@ -165,7 +175,7 @@ const CollectionDistribution = () => {
                 <FileText className="mr-2" />
                 Document Type Distribution
             </h3>
-            <div className="h-[400px]">
+            <div className="h-96">
                 <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                         <Pie
@@ -225,12 +235,33 @@ const TimelineExplorer = () => {
     );
 };
 
+const LanguageDropdown = ({ isOpen, setIsOpen }) => {
+    return (
+        <div className="absolute top-full left-0 mt-1 w-48 bg-white rounded-lg shadow-lg overflow-hidden z-[10]">
+            {languages.map((lang, index) => (
+                <div key={lang.code}
+                    className="p-2 hover:bg-gray-50 flex justify-between items-center text-sm cursor-pointer">
+                    <span>{lang.name}</span>
+                    <span className="text-gray-500">{lang.percentage}%</span>
+                </div>
+            ))}
+        </div>
+    );
+};
+
 const ArchiveStats = () => {
+    const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
+
     const stats = [
         { label: 'Total Collections', value: '~200', icon: FileText },
         { label: 'Institutions', value: '7+', icon: Users },
         { label: 'Date Range', value: '1870-1949', icon: CalendarDays },
-        { label: 'Languages', value: '4+', icon: Globe }
+        {
+            label: 'Languages',
+            value: '6+',
+            icon: Globe,
+            hasDropdown: true
+        }
     ];
 
     return (
@@ -240,7 +271,25 @@ const ArchiveStats = () => {
                 return (
                     <div key={index} className="bg-white rounded-lg shadow-lg p-4">
                         <Icon className="h-6 w-6 text-red-600 mb-2" />
-                        <div className="text-xl font-bold">{stat.value}</div>
+                        <div className="flex items-center gap-2">
+                            <div className="text-xl font-bold">{stat.value}</div>
+                            {stat.hasDropdown && (
+                                <div className="relative">
+                                    <button
+                                        onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
+                                        className="p-1 hover:bg-gray-100 rounded-full transition-colors"
+                                    >
+                                        <ChevronDown className="h-4 w-4" />
+                                    </button>
+                                    {isLanguageDropdownOpen && (
+                                        <LanguageDropdown
+                                            isOpen={isLanguageDropdownOpen}
+                                            setIsOpen={setIsLanguageDropdownOpen}
+                                        />
+                                    )}
+                                </div>
+                            )}
+                        </div>
                         <div className="text-xs text-gray-600">{stat.label}</div>
                     </div>
                 );
