@@ -1,0 +1,21 @@
+#root {
+  width: 100%;
+  margin: 0 auto;
+}
+
+@font-face {
+  font-family: 'Kings Bureau Grotesque';
+  src: url('https://www.kcl.ac.uk/SiteElements/2017/fonts/KingsBureauGrotesqueFiveOne-woff.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.header {
+  font-family: 'Kings Bureau Grotesque', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.footer a {
+  color: #fff;
+  text-decoration: underline;
+}
