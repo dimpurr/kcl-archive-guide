@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { FileText, BookOpen, Globe, Users, Calendar, Search, ChevronRight, Building, Book } from 'lucide-react';
+import { FileText, BookOpen, BookOpenText, Globe, Users, Calendar, Search, ChevronRight, Building, Book } from 'lucide-react';
+import TerminologyView from './terminology-view';
 
 export const allGuides = {
   combined: [
@@ -141,30 +142,72 @@ export const allGuides = {
   ]
 };
 
-export const GuideTitleBar = ({ currentGuide, onBack }) => {
-  return (
-    <div className="w-full bg-[#F8F9FA] border-b">
-      <div className="mx-auto max-w-7xl py-6 px-4">
-        {currentGuide ? (
-          <div className="flex items-center">
-            <button onClick={onBack} className="text-[#4666E5] hover:text-[#D11242] mr-4 flex items-center">
-              <ChevronRight className="h-4 w-4 transform rotate-180 mr-1" />
-              Back to Research Guides
-            </button>
-            <h1 className="text-2xl font-medium">{currentGuide.title}</h1>
-          </div>
-        ) : (
-          <div>
-            <div className="flex items-center space-x-2 mb-2">
-              <BookOpen className="h-6 w-6 text-[#D11242]" />
-              <h1 className="text-2xl font-medium">Research Guides</h1>
+
+export const GuideTitleBar = ({ currentGuide, onBack, onToggleTerminology }) => {
+    const [showTerminology, setShowTerminology] = useState(false);
+
+    const handleTerminologyClick = () => {
+        setShowTerminology(!showTerminology);
+        if (onToggleTerminology) {
+            onToggleTerminology(!showTerminology);
+        }
+    };
+
+    return (
+        <div className="w-full bg-[#F8F9FA] border-b">
+            <div className="mx-auto max-w-7xl py-6 px-4">
+                {currentGuide ? (
+                    <div>
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center">
+                                <button onClick={onBack} className="text-[#4666E5] hover:text-[#D11242] mr-4 flex items-center">
+                                    <ChevronRight className="h-4 w-4 transform rotate-180 mr-1" />
+                                    Back to Research Guides
+                                </button>
+                                <h1 className="text-2xl font-medium">{currentGuide.title}</h1>
+                            </div>
+                            <button
+                                onClick={handleTerminologyClick}
+                                className="flex items-center px-3 py-2 text-sm border rounded hover:bg-gray-50"
+                            >
+                                <BookOpenText className="h-4 w-4 mr-2" />
+                                {showTerminology ? 'Hide Terminology' : 'Show Terminology'}
+                            </button>
+                        </div>
+                        {showTerminology && (
+                            <div className="mt-4">
+                                <TerminologyView />
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                    <div>
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <div className="flex items-center space-x-2 mb-2">
+                                    <BookOpen className="h-6 w-6 text-[#D11242]" />
+                                    <h1 className="text-2xl font-medium">Research Guides</h1>
+                                </div>
+                                <p className="text-gray-600">Explore our comprehensive collection guides and research resources</p>
+                            </div>
+                            <button
+                                onClick={handleTerminologyClick}
+                                className="flex items-center px-3 py-2 text-sm border rounded hover:bg-gray-50"
+                            >
+                                <BookOpenText className="h-4 w-4 mr-2" />
+                                {showTerminology ? 'Hide Terminology' : 'Show Terminology'}
+                            </button>
+                        </div>
+                        {showTerminology && (
+                            <div className="mt-4">
+                                <TerminologyView />
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
-            <p className="text-gray-600">Explore our comprehensive collection guides and research resources</p>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+        </div>
+    );
 };
 
 export const GuideCard = ({ guide, onClick }) => (

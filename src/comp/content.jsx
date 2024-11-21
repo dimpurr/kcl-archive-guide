@@ -231,7 +231,7 @@ export default function PreludeToWar() {
                 />.
             </p>
 
-            <h2>Military Observations & Exercises</h2>
+            <br /><h2 className='text-2xl'>Military Observations & Exercises</h2><br />
 
             <p>
                 General Sir Ian Hamilton served as one of the European official observers during the
