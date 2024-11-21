@@ -163,7 +163,7 @@ export const GuideTitleBar = ({ currentGuide, onBack, onToggleTerminology }) => 
                                 <button onClick={onBack} className="text-[#4666E5] hover:text-[#D11242] mr-4 flex items-center">
                                     <ChevronRight className="h-4 w-4 transform rotate-180 mr-1" />
                                     Back to Research Guides
-                                </button>
+                                </button>&nbsp;&nbsp;&nbsp;
                                 <h1 className="text-2xl font-medium">{currentGuide.title}</h1>
                             </div>
                             <button
