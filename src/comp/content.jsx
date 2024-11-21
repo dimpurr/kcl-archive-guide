@@ -80,7 +80,7 @@ export default function PreludeToWar() {
     const galleryImages = [
         {
             url: 'https://cdn.britannica.com/49/135149-050-D6B8878A/troops-British-trench-Western-Front-World-War.jpg',
-            caption: 'General Sir Ian Hamilton with Field Marshal Lord Roberts and other British and German officers, Hotel Bellevue, Dresden, 1910'
+            caption: 'General Sir Ian Hamilton papers'
         },
         {
             url: 'https://cdn.britannica.com/49/135149-050-D6B8878A/troops-British-trench-Western-Front-World-War.jpg',
