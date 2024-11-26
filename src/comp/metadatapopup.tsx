@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FileText, ExternalLink, X, Download } from 'lucide-react';
+import { meta } from '@eslint/js';
 
 const MetadataPopup = ({ metadata, onClose }) => (
     <div className="absolute top-[40px] right-0 mt-2 w-[450px] bg-white shadow-lg rounded-lg z-50 border">
@@ -63,10 +64,10 @@ const MetadataPopup = ({ metadata, onClose }) => (
                         <ExternalLink className="h-4 w-4 mr-1" />
                         View in Catalogue
                     </a>
-                    <button className="flex items-center text-sm text-[#4666E5] hover:text-[#D11242]">
+                    <a className="flex items-center text-sm text-[#4666E5] hover:text-[#D11242]" href={metadata.metadataUrl}>
                         <Download className="h-4 w-4 mr-1" />
                         Export Metadata
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -85,6 +86,7 @@ const DocumentPreview = ({ document }) => {
         date: document.date,
         identifier: document.referenceCode || "LIDDELL HART 15/8/92",
         catalogueUrl: "https://archives.kingscollections.org/index.php/liddell-hart-15-8-92",
+        metadataUrl: "https://archives.kingscollections.org/downloads/exports/dc/cc33c6669be5d322a98394ecd507d8b2.dc.xml",
         type: "Text",
         format: "Document",
         language: "eng",
